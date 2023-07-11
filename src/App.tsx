@@ -1,24 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import type { ChangeEvent } from "react";
 
 function App() {
+  const [text, setText] = useState("");
+  const [list, setList] = useState<String[]>([]);
+
+  const handleGetText = (e: ChangeEvent<HTMLInputElement>) => {
+    setText(e.target.value);
+  };
+
+  const handleGetList = () => {
+    setList([...list, text]);
+    setText("");
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <input type="text" value={text} onChange={handleGetText} />
+      <button onClick={handleGetList}>追加</button>
+      <ul>
+        {list.map((text, index) => (
+          <li key={index}>{text}</li>
+        ))}
+      </ul>
     </div>
   );
 }
